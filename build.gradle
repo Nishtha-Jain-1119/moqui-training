@@ -27,7 +27,6 @@ tasks.withType(JavaCompile) { options.compilerArgs << "-proc:none" }
 tasks.withType(GroovyCompile) { options.compilerArgs << "-proc:none" }
 
 dependencies {
-    compile project(':framework')
     runtime 'mysql:mysql-connector-java:5.1.47'
 
 }
