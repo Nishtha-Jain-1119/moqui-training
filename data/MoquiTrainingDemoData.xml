@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-facade-xml type="demo">
+    <moqui.training.MoquiTraining
+            trainingId="001"
+            trainingName="Name1"
+            trainingDate="2024-01-01 02:00"
+            trainingPrice="40"
+            trainingDuration="200"/>
+    <moqui.training.MoquiTraining
+            trainingId="002"
+            trainingName="Name2"
+            trainingDate="2024-01-01 00:00"
+            trainingPrice="40"
+            trainingDuration="200"/>
+</entity-facade-xml>
