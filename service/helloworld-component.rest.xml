@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/rest-api-3.xsd"
+          name="helloworld-component" displayName="Custom Component REST API" version="1.0.0">
+    <resource name="examples" require-authentication="anonymous-all">
+        <method type="get"><entity name="moqui.training.ExampleOne" operation="list"/></method>
+        <method type="post"><service name="moqui.training.Services.create#ExampleOne"/></method>
+        <method type="put"><entity name="moqui.training.ExampleOne" operation="store"/></method>
+        <id name="exampleId">
+            <method type="get"><entity name="moqui.training.ExampleOne" operation="one"/></method>
+            <method type="patch"><service name="moqui.training.Services.update#ExampleOne"/></method>
+        </id>
+    </resource>
+</resource>
