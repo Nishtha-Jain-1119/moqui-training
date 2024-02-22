@@ -1,0 +1,1 @@
+def call_service_result = ec.service.sync().name("create", "moqui.training.MoquiTraining").parameters(context).call()

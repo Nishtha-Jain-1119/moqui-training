@@ -1,0 +1,5 @@
+MoquiTrainingServices.create#MoquiTrainingInline, demo
+trainingId, trainingName, trainingDate, trainingPrice, trainingDuration
+008, Service4, 2024-01-01 02:00, 60, 450
+009, Service5, 2024-01-01 02:00, 30, 850
+, Service6, 2024-01-01 02:00, 60, 450
