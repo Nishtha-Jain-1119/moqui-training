@@ -53,10 +53,66 @@
             <entity-find entity-name="moqui.training.MoquiTraining" list="moquiTrainingList">
                 <econditions combine="or">
                     <econdition field-name="trainingId" value="${trainingId}"/>
-                    <econdition field-name="trainingName" value="%${trainingName}%" operator="like"/>
+                    <econdition field-name="trainingName" value="${trainingName}"/>
                 </econditions>
                 <select-field field-name="trainingId,trainingName,trainingDate"/>
             </entity-find>
+        </actions>
+    </service>
+
+    <service verb="store" noun="MoquiTraining">
+        <in-parameters>
+            <auto-parameters entity-name="moqui.training.MoquiTraining"/>
+            <parameter name="trainingDate" format="dd/mm/yyyy"/>
+            <parameter name="trainingPrice"><number-integer/></parameter>
+            <parameter name="trainingDuration"><number-integer/></parameter>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="trainingId"/>
+        </out-parameters>
+        <actions>
+            <if condition="trainingId &amp;&amp; trainingName">
+                <entity-find entity-name="moqui.training.MoquiTraining" list="existingMoquiTraining">
+                    <econditions>
+                        <econdition field-name="trainingId" value="${trainingId}"/>
+                        <econdition field-name="trainingName" value="${trainingName}"/>
+                    </econditions>
+                </entity-find>
+                <if condition="existingMoquiTraining"><then>
+                    <service-call name="update#moqui.training.MoquiTraining" in-map="context" out-map="context"/>
+                    </then>
+                <else>
+                    <service-call name="create#moqui.training.MoquiTraining" in-map="context" out-map="context"/>
+                </else>
+                </if>
+            </if>
+            <if condition="!trainingName &amp;&amp; trainingId">
+                <entity-find-one entity-name="moqui.training.MoquiTraining" value-field="existingMoquiTraining">
+                    <field-map field-name="trainingId" value="${trainingId}"/>
+                </entity-find-one>
+                <if condition="existingMoquiTraining">
+                    <service-call name="update#moqui.training.MoquiTraining" in-map="context" out-map="context"/>
+                    <else>
+                        <message error="true">Can't create records without trainingName</message>
+                    </else>
+                </if>
+            </if>
+            <if condition="trainingName &amp;&amp; !trainingId">
+                <entity-find entity-name="moqui.training.MoquiTraining" list="existingMoquiTraining">
+                    <econditions>
+                        <econdition field-name="trainingName" value="${trainingName}"/>
+                    </econditions>
+                </entity-find>
+                <if condition="existingMoquiTraining">
+                    <then>
+                        <set field="trainingId" from="existingMoquiTraining?.first?.trainingId"/>
+                        <service-call name="update#moqui.training.MoquiTraining" in-map="context" out-map="context"/>
+                    </then>
+                    <else>
+                        <service-call name="create#moqui.training.MoquiTraining" in-map="context" out-map="context"/>
+                    </else>
+                </if>
+            </if>
         </actions>
     </service>
 </services>
